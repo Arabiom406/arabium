@@ -337,7 +337,23 @@ section[data-requires-auth="true"].auth-unlocked>.auth-required-message{display:
         <div class="auth-required-actions"><button class="btn btn-primary" type="button" data-auth-required="login">ورود به حساب</button><button class="btn btn-outline" type="button" data-auth-required="signup">ثبت‌نام رایگان</button></div>
       </div>
     </div>
-    <div class="toolbar"><input class="input search-input" id="wordSearch" placeholder="بین واژه‌ها بگرد..." aria-label="جست‌وجوی واژه"><div class="tabs" id="wordTabs" style="margin:0"><button class="tab active" data-type="all">همه</button><button class="tab" data-type="فعل">فعل</button><button class="tab" data-type="اسم">اسم</button><button class="tab" data-type="صفت">صفت</button></div></div>
+    <div class="toolbar"><input class="input search-input" id="wordSearch" placeholder="بین واژه‌ها بگرد..." aria-label="جست‌وجوی واژه"><div class="tabs vocabulary-tabs" id="wordTabs" style="margin:0">
+      <button class="tab active" data-type="all">همه</button>
+      <button class="tab" data-type="اسم">اسم</button>
+      <button class="tab" data-type="فعل">فعل</button>
+      <button class="tab" data-type="صفت">صفت</button>
+      <button class="tab" data-type="حرف">حرف</button>
+      <button class="tab" data-type="مترادف‌ها">مترادف‌ها</button>
+      <button class="tab" data-type="متضادها">متضادها</button>
+      <button class="tab" data-type="جمع مکسر">جمع‌های مکسر</button>
+      <button class="tab" data-type="جمع سالم">جمع‌های سالم</button>
+      <button class="tab" data-type="ضمیرها">ضمیرها</button>
+      <button class="tab" data-type="کلمات پرسشی">کلمات پرسشی</button>
+      <button class="tab" data-type="اسم اشاره">اسم اشاره</button>
+      <button class="tab" data-type="مثنی">مثنی</button>
+      <button class="tab" data-type="اعداد">اعداد</button>
+      <button class="tab" data-type="رنگ‌ها">رنگ‌ها</button>
+    </div></div>
     <div class="content-grid" id="wordGrid" style="margin-top:17px"></div>
     <div class="flashcard-stage glass" id="flashcardStage" hidden aria-live="polite"><div><span class="word-type" id="flashcardType">فلش‌کارت</span><div class="flashcard-term" id="flashcardTerm"></div><div class="flashcard-answer" id="flashcardAnswer" hidden></div></div><div class="flashcard-controls"><button class="btn btn-primary" id="flashcardReveal">نمایش معنی</button><button class="btn btn-outline" id="flashcardNext">واژه بعدی ←</button><button class="btn btn-ghost" id="flashcardClose">بستن</button></div></div>
   </section>
@@ -459,7 +475,33 @@ function updateGradeUI(){$$('[data-grade-select]').forEach(el=>{if(el.classList.
 $$('[data-grade-select]').forEach(el=>{const choose=()=>{selectedGrade=String(el.dataset.gradeSelect);renderPublic();updateGradeUI();if(el.classList.contains('grade-tile'))toast('محتوای پایه '+gradeLabel(selectedGrade)+' فعال شد.')};el.addEventListener('click',choose);if(el.classList.contains('grade-card'))el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose()}})});
 $('#showAllGrades').addEventListener('click',()=>{selectedGrade='all';renderPublic();updateGradeUI();toast('محتوای همه پایه‌ها رو می‌بینی.')});
 function emptyMarkup(title,desc,icon='✧'){return `<div class="empty-state glass"><div class="empty-graphic">${icon}</div><h3>${esc(title)}</h3><p>${esc(desc)}</p></div>`}
-function renderWords(){const q=$('#wordSearch').value.trim().toLowerCase();const arr=state.words.filter(w=>gradeMatches(w)&&(wordType==='all'||w.type===wordType)&&(!q||(w.term+' '+w.translation+' '+(w.example||'')).toLowerCase().includes(q)));const grid=$('#wordGrid');grid.innerHTML=arr.length?arr.map(w=>`<article class="word-card glass"><span class="word-type">${esc(w.type)}</span><div class="word-term">${esc(w.term)}</div><div class="word-translation" id="answer_${esc(w.id)}" hidden>${esc(w.translation)}</div>${w.example?`<div class="word-note" id="example_${esc(w.id)}" hidden>${esc(w.example)}</div>`:''}<button class="word-flip" data-flip="${esc(w.id)}">↻ نمایش معنی</button></article>`).join(''):emptyMarkup(q?'نتیجه‌ای پیدا نشد':'هنوز واژه‌ای اضافه نکردیم',q?'یه عبارت دیگه رو امتحان کن.':'مدیر سایت می‌تونه فعل‌ها، اسم‌ها و صفت‌ها رو از پنل مدیریت اضافه کنه.','ع');$$('[data-flip]',grid).forEach(b=>b.addEventListener('click',()=>{const answer=document.getElementById('answer_'+b.dataset.flip);const example=document.getElementById('example_'+b.dataset.flip);if(answer){answer.hidden=!answer.hidden;if(example)example.hidden=answer.hidden;b.textContent=answer.hidden?'↻ نمایش معنی':'↩ پنهان کردن پاسخ'}}))}
+function wordDetailsMarkup(w){
+ const parts=[];
+ if(w.plural)parts.push(`<div class="word-note"><b>جمع:</b> ${esc(w.plural)}</div>`);
+ if(Array.isArray(w.synonyms)&&w.synonyms.length)parts.push(`<div class="word-note"><b>مترادف:</b> ${w.synonyms.map(esc).join('، ')}</div>`);
+ if(Array.isArray(w.antonyms)&&w.antonyms.length)parts.push(`<div class="word-note"><b>متضاد:</b> ${w.antonyms.map(esc).join('، ')}</div>`);
+ if(w.example)parts.push(`<div class="word-note"><b>یادداشت:</b> ${esc(w.example)}</div>`);
+ if(w.topic)parts.push(`<div class="word-note"><b>موضوع:</b> ${esc(w.topic)}</div>`);
+ return parts.join('');
+}
+function wordMatchesFilter(w){
+ if(wordType==='all')return true;
+ const categories=Array.isArray(w.categories)?w.categories:[];
+ return w.type===wordType||categories.includes(wordType);
+}
+function renderWords(){
+ const q=$('#wordSearch').value.trim().toLowerCase();
+ const arr=state.words.filter(w=>gradeMatches(w)&&wordMatchesFilter(w)&&(!q||[w.term,w.translation,w.example,w.topic,w.plural,...(w.synonyms||[]),...(w.antonyms||[])].join(' ').toLowerCase().includes(q)));
+ const grid=$('#wordGrid');
+ grid.innerHTML=arr.length?arr.map(w=>{
+  const badge=wordType!=='all'?wordType:(w.type||'واژه');
+  return `<article class="word-card glass"><span class="word-type">${esc(badge)}</span><div class="word-term">${esc(w.term)}</div><div class="word-translation" id="answer_${esc(w.id)}" hidden><strong>${esc(w.translation)}</strong>${wordDetailsMarkup(w)}</div><button class="word-flip" type="button" data-flip="${esc(w.id)}">↻ نمایش معنی و اطلاعات</button></article>`
+ }).join(''):emptyMarkup(q?'نتیجه‌ای پیدا نشد':'هنوز واژه‌ای برای این دسته اضافه نشده',q?'یه عبارت دیگه رو امتحان کن.':'واژه‌های پایه هفتم از فهرست اصلی عربیوم بارگذاری می‌شن.','ع');
+ $$('[data-flip]',grid).forEach(b=>b.addEventListener('click',()=>{
+  const answer=document.getElementById('answer_'+b.dataset.flip);
+  if(answer){answer.hidden=!answer.hidden;b.textContent=answer.hidden?'↻ نمایش معنی و اطلاعات':'↩ بستن اطلاعات'}
+ }));
+}
 $('#wordSearch').addEventListener('input',renderWords);$('#wordTabs').addEventListener('click',e=>{const b=e.target.closest('[data-type]');if(!b)return;wordType=b.dataset.type;$$('#wordTabs .tab').forEach(x=>x.classList.toggle('active',x===b));renderWords()});function showFlashcard(){if(!flashDeck.length)return;const w=flashDeck[flashIndex%flashDeck.length];$('#flashcardType').textContent=(w.type||'واژه')+' · '+gradeLabel(w.grade);$('#flashcardTerm').textContent=w.term;$('#flashcardAnswer').textContent=w.translation+(w.example?' · '+w.example:'');$('#flashcardAnswer').hidden=true;$('#flashcardReveal').textContent='نمایش معنی';$('#flashcardStage').hidden=false}
 $('#flashcardHint').addEventListener('click',e=>{e.preventDefault();if(!requireLearningAccess('فلش‌کارت'))return;if(!state.words.length){toast('هنوز واژه‌ای برای فلش‌کارت نداریم.');return}flashDeck=state.words.slice().sort(()=>Math.random()-.5);flashIndex=0;showFlashcard();$('#flashcardStage').scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'center'})});
 $('#flashcardReveal').addEventListener('click',()=>{const a=$('#flashcardAnswer');a.hidden=!a.hidden;$('#flashcardReveal').textContent=a.hidden?'نمایش معنی':'پنهان کردن معنی'});
@@ -511,6 +553,59 @@ function updateLearningAccess(){const allowed=hasLearningAccess();['grades','lea
 function requireLearningAccess(feature='این بخش آموزشی'){if(hasLearningAccess())return true;toast('برای استفاده از محتوای آموزشی، اول وارد شو یا رایگان ثبت‌نام کن.');showAuth('login');openOverlay('authOverlay');return false}
 function renderPublic(){updateLearningAccess();renderContact();updateGradeUI();if(!hasLearningAccess()){['wordGrid','grammarGrid','resourcesGrid','examsGrid'].forEach(id=>{const el=$('#'+id);if(el)el.innerHTML=''});const stage=$('#flashcardStage');if(stage)stage.hidden=true;return}renderWords();renderGrammar();renderResources();renderExams()}
 renderPublic();showAuth('login');
+const grade7VocabularyPacks=[
+ 'grade7-vocab-nouns.json.gz.b64',
+ 'grade7-vocab-adjectives.json.gz.b64',
+ 'grade7-vocab-numbers.json.gz.b64',
+ 'grade7-vocab-structure.json.gz.b64',
+ 'grade7-vocab-verbs.json.gz.b64',
+ 'grade7-vocab-letters.json.gz.b64',
+ 'grade7-vocab-plurals.json.gz.b64'
+];
+async function fetchCompressedJson(path){
+ const response=await fetch('./'+path,{cache:'no-store'});
+ if(!response.ok)throw new Error('خطا در دریافت '+path+': '+response.status);
+ const encoded=(await response.text()).trim();
+ if(typeof DecompressionStream!=='function')throw new Error('این مرورگر از بازکردن دادهٔ فشرده پشتیبانی نمی‌کند.');
+ const binary=atob(encoded);
+ const bytes=new Uint8Array(binary.length);
+ for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
+ const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
+ return await new Response(stream).json();
+}
+async function loadGrade7Seed(){
+ const packs=await Promise.all(grade7VocabularyPacks.map(fetchCompressedJson));
+ const seeded=[];
+ for(const pack of packs){
+  for(const row of (pack.words||[])){
+   let term,translation,type,extraCategories,topic,plural,synonyms,antonyms,example;
+   if(pack.mixed){[term,translation,type,extraCategories,topic,plural,synonyms,antonyms,example]=row}
+   else{[term,translation,extraCategories,topic,plural,synonyms,antonyms,example]=row;type=pack.type}
+   const categories=Array.from(new Set([type,...(extraCategories||[])]));
+   if(type==='ضمیر'&&!categories.includes('ضمیرها'))categories.push('ضمیرها');
+   if(type==='کلمه پرسشی'&&!categories.includes('کلمات پرسشی'))categories.push('کلمات پرسشی');
+   if(type==='عدد'&&!categories.includes('اعداد'))categories.push('اعداد');
+   seeded.push({
+    id:'v7-seed-'+String(seeded.length+1).padStart(4,'0'),
+    term,translation,type,category:type,grade:'7',categories,
+    topic:topic||'',plural:plural||'',synonyms:synonyms||[],antonyms:antonyms||[],
+    example:example||'',seededFromPdf:true
+   });
+  }
+ }
+ if(seeded.length!==526)throw new Error('تعداد دادهٔ واژه‌نامه با انتظار سازگار نیست: '+seeded.length);
+ const custom=(state.words||[]).filter(w=>!String(w.id||'').startsWith('v7-')&&!w.seededFromPdf);
+ state.words=[...custom,...seeded];
+ saveState();
+ return seeded.length;
+}
+loadGrade7Seed().then(count=>{
+ console.info('عربیوم: واژه‌های پایه هفتم بارگذاری شد؛ تعداد مدخل‌ها:',count);
+ renderPublic();
+}).catch(error=>{
+ console.error('بارگذاری واژگان پایه هفتم انجام نشد:',error);
+ toast('بارگذاری واژه‌ها کامل نشد؛ صفحه را دوباره تازه‌سازی کن.');
+});
 // Keep keyboard behavior friendly for dialogs and scroll targets.
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){$$('.overlay.open').forEach(o=>closeOverlay(o.id));$('#navLinks').classList.remove('open')}});
 // Demo credentials are intentionally shown to the owner; replace with server-based auth before public deployment.
