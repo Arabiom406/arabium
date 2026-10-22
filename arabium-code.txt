@@ -249,6 +249,18 @@ body[data-theme="light"] .muted,body[data-theme="light"] .tiny{color:#7c8b9b}
 body[data-theme="light"] .footer{background:linear-gradient(145deg,#8bd9d4,#269ba8);color:#fff;border-color:#c8f3ed}
 body[data-theme="light"] .footer a{color:#fff}
 
+
+/* Account gate for educational sections */
+.auth-required-message{display:none;align-items:center;gap:18px;margin-top:20px;padding:24px;border-radius:24px;color:var(--text)}
+.auth-lock-icon{flex:none;width:54px;height:54px;display:grid;place-items:center;border-radius:17px;background:linear-gradient(145deg,rgba(93,195,191,.25),rgba(178,151,234,.2));border:1px solid var(--line);font-size:1.7rem}
+.auth-required-copy{flex:1;min-width:0}
+.auth-required-message h3{margin:0 0 6px;font-size:1.15rem}
+.auth-required-message p{margin:0;color:var(--muted);line-height:1.9}
+.auth-required-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+section[data-requires-auth="true"]:not(.auth-unlocked)>:not(.section-head):not(.auth-required-message){display:none!important}
+section[data-requires-auth="true"]:not(.auth-unlocked)>.auth-required-message{display:flex}
+section[data-requires-auth="true"].auth-unlocked>.auth-required-message{display:none!important}
+@media(max-width:600px){.auth-required-message{align-items:flex-start;padding:17px;gap:12px}.auth-lock-icon{width:42px;height:42px;font-size:1.25rem}.auth-required-actions .btn{flex:1}}
 </style>
 </head>
 <body>
@@ -283,39 +295,87 @@ body[data-theme="light"] .footer a{color:#fff}
       </div><div class="floating-note glass">محیطی برای تمرین روزانه <b>عربیوم · ۰۷—۰۹</b></div>
     </div>
   </section>
-  <section class="container section" id="grades">
+  <section class="container section" id="grades" data-requires-auth="true">
     <div class="section-head"><div><span class="eyebrow">انتخاب پایه</span><h2>پایه‌ات رو انتخاب کن</h2></div><button class="btn btn-outline" id="showAllGrades">دیدن همه پایه‌ها</button></div>
+    <div class="auth-required-message glass" role="region" aria-label="نیاز به ورود برای محتوای آموزشی">
+      <span class="auth-lock-icon" aria-hidden="true">🔒</span>
+      <div class="auth-required-copy">
+        <h3>این بخش برای اعضای عربیومه</h3>
+        <p>برای دیدن و استفاده از محتوای آموزشی، اول وارد حسابت شو یا رایگان ثبت‌نام کن.</p>
+        <div class="auth-required-actions"><button class="btn btn-primary" type="button" data-auth-required="login">ورود به حساب</button><button class="btn btn-outline" type="button" data-auth-required="signup">ثبت‌نام رایگان</button></div>
+      </div>
+    </div>
     <div class="grade-cards">
       <article class="grade-card glass" data-num="۷" data-grade-select="7" role="button" tabindex="0" aria-label="انتخاب پایه هفتم"><span class="grade-pill">پایه هفتم</span><h3>از پایه شروع کن</h3><div class="card-bottom"><span>برو به بخش‌ها</span><span>←</span></div></article>
       <article class="grade-card glass" data-num="۸" data-grade-select="8" role="button" tabindex="0" aria-label="انتخاب پایه هشتم"><span class="grade-pill">پایه هشتم</span><h3>بیا چیزای بیشتری یاد بگیریم</h3><div class="card-bottom"><span>برو به بخش‌ها</span><span>←</span></div></article>
       <article class="grade-card glass" data-num="۹" data-grade-select="9" role="button" tabindex="0" aria-label="انتخاب پایه نهم"><span class="grade-pill">پایه نهم</span><h3>آماده‌تر از قبل</h3><div class="card-bottom"><span>برو به بخش‌ها</span><span>←</span></div></article>
     </div>
   </section>
-  <section class="container section" id="learning-tools">
+  <section class="container section" id="learning-tools" data-requires-auth="true">
     <div class="section-head"><div><span class="eyebrow">ابزارهای یاد گرفتن</span><h2>همه‌چی، مرتب و یک‌جا</h2></div></div>
+    <div class="auth-required-message glass" role="region" aria-label="نیاز به ورود برای محتوای آموزشی">
+      <span class="auth-lock-icon" aria-hidden="true">🔒</span>
+      <div class="auth-required-copy">
+        <h3>این بخش برای اعضای عربیومه</h3>
+        <p>برای دیدن و استفاده از محتوای آموزشی، اول وارد حسابت شو یا رایگان ثبت‌نام کن.</p>
+        <div class="auth-required-actions"><button class="btn btn-primary" type="button" data-auth-required="login">ورود به حساب</button><button class="btn btn-outline" type="button" data-auth-required="signup">ثبت‌نام رایگان</button></div>
+      </div>
+    </div>
     <div class="grid-3">
       <article class="feature-card glass"><span class="feature-icon">▤</span><h3>واژه‌نامه هوشمند</h3></article>
       <article class="feature-card glass"><span class="feature-icon">⌘</span><h3>قواعد مرتب و دسته‌بندی‌شده</h3></article>
       <article class="feature-card glass"><span class="feature-icon">▷</span><h3>ویدیو و جزوه</h3></article>
     </div>
   </section>
-  <section class="container section" id="vocabulary">
+  <section class="container section" id="vocabulary" data-requires-auth="true">
     <div class="section-head"><div><span class="eyebrow">تمرین هر روز</span><h2>واژه‌نامه عربی</h2></div><a class="section-link" href="#" id="flashcardHint">فلش‌کارت‌ها ←</a></div>
+    <div class="auth-required-message glass" role="region" aria-label="نیاز به ورود برای محتوای آموزشی">
+      <span class="auth-lock-icon" aria-hidden="true">🔒</span>
+      <div class="auth-required-copy">
+        <h3>این بخش برای اعضای عربیومه</h3>
+        <p>برای دیدن و استفاده از محتوای آموزشی، اول وارد حسابت شو یا رایگان ثبت‌نام کن.</p>
+        <div class="auth-required-actions"><button class="btn btn-primary" type="button" data-auth-required="login">ورود به حساب</button><button class="btn btn-outline" type="button" data-auth-required="signup">ثبت‌نام رایگان</button></div>
+      </div>
+    </div>
     <div class="toolbar"><input class="input search-input" id="wordSearch" placeholder="بین واژه‌ها بگرد..." aria-label="جست‌وجوی واژه"><div class="tabs" id="wordTabs" style="margin:0"><button class="tab active" data-type="all">همه</button><button class="tab" data-type="فعل">فعل</button><button class="tab" data-type="اسم">اسم</button><button class="tab" data-type="صفت">صفت</button></div></div>
     <div class="content-grid" id="wordGrid" style="margin-top:17px"></div>
     <div class="flashcard-stage glass" id="flashcardStage" hidden aria-live="polite"><div><span class="word-type" id="flashcardType">فلش‌کارت</span><div class="flashcard-term" id="flashcardTerm"></div><div class="flashcard-answer" id="flashcardAnswer" hidden></div></div><div class="flashcard-controls"><button class="btn btn-primary" id="flashcardReveal">نمایش معنی</button><button class="btn btn-outline" id="flashcardNext">واژه بعدی ←</button><button class="btn btn-ghost" id="flashcardClose">بستن</button></div></div>
   </section>
-  <section class="container section" id="grammar">
+  <section class="container section" id="grammar" data-requires-auth="true">
     <div class="section-head"><div><span class="eyebrow">قواعد رو بهتر بفهم</span><h2>قواعد و درس‌ها</h2></div></div>
+    <div class="auth-required-message glass" role="region" aria-label="نیاز به ورود برای محتوای آموزشی">
+      <span class="auth-lock-icon" aria-hidden="true">🔒</span>
+      <div class="auth-required-copy">
+        <h3>این بخش برای اعضای عربیومه</h3>
+        <p>برای دیدن و استفاده از محتوای آموزشی، اول وارد حسابت شو یا رایگان ثبت‌نام کن.</p>
+        <div class="auth-required-actions"><button class="btn btn-primary" type="button" data-auth-required="login">ورود به حساب</button><button class="btn btn-outline" type="button" data-auth-required="signup">ثبت‌نام رایگان</button></div>
+      </div>
+    </div>
     <div class="content-grid" id="grammarGrid"></div>
   </section>
-  <section class="container section" id="resources">
+  <section class="container section" id="resources" data-requires-auth="true">
     <div class="section-head"><div><span class="eyebrow">منابع آموزشی</span><h2>جزوه‌ها و ویدیوها</h2></div></div>
+    <div class="auth-required-message glass" role="region" aria-label="نیاز به ورود برای محتوای آموزشی">
+      <span class="auth-lock-icon" aria-hidden="true">🔒</span>
+      <div class="auth-required-copy">
+        <h3>این بخش برای اعضای عربیومه</h3>
+        <p>برای دیدن و استفاده از محتوای آموزشی، اول وارد حسابت شو یا رایگان ثبت‌نام کن.</p>
+        <div class="auth-required-actions"><button class="btn btn-primary" type="button" data-auth-required="login">ورود به حساب</button><button class="btn btn-outline" type="button" data-auth-required="signup">ثبت‌نام رایگان</button></div>
+      </div>
+    </div>
     <div class="tabs" id="resourceTabs"><button class="tab active" data-resource="all">همه منابع</button><button class="tab" data-resource="notes">جزوه‌ها</button><button class="tab" data-resource="videos">ویدیوها</button></div>
     <div class="content-grid" id="resourcesGrid"></div>
   </section>
-  <section class="container section" id="exams">
+  <section class="container section" id="exams" data-requires-auth="true">
     <div class="section-head"><div><span class="eyebrow">ببین چقدر یاد گرفتی</span><h2>آزمون‌های آموزشی</h2></div></div>
+    <div class="auth-required-message glass" role="region" aria-label="نیاز به ورود برای محتوای آموزشی">
+      <span class="auth-lock-icon" aria-hidden="true">🔒</span>
+      <div class="auth-required-copy">
+        <h3>این بخش برای اعضای عربیومه</h3>
+        <p>برای دیدن و استفاده از محتوای آموزشی، اول وارد حسابت شو یا رایگان ثبت‌نام کن.</p>
+        <div class="auth-required-actions"><button class="btn btn-primary" type="button" data-auth-required="login">ورود به حساب</button><button class="btn btn-outline" type="button" data-auth-required="signup">ثبت‌نام رایگان</button></div>
+      </div>
+    </div>
     <div class="content-grid" id="examsGrid"></div>
   </section>
   <section class="container section" id="contact">
@@ -345,7 +405,9 @@ const STORAGE='arabium_demo_v1';
 const DB_NAME='arabium_files_demo', DB_STORE='files';
 const ADMIN_USER='admin'; const ADMIN_PASS='Arabium#1405';
 const emptyState=()=>({words:[],grammar:[],notes:[],videos:[],exams:[],users:[],messages:[],contact:{email:'',phone:'',intro:'پیام‌ها و راه‌های ارتباطی از بخش مدیریت قابل تنظیم هستند.'},examResults:[]});
-let state=loadState(), authMode='login', wordType='all', resourceType='all', selectedGrade='all', adminTab='dashboard', editingId=null, isAdminSession=false, currentUser=null, activeExam=null, flashDeck=[], flashIndex=0, fileUrlCache=new Map(), dbPromise=null;
+function loadSessionUser(){try{const value=JSON.parse(sessionStorage.getItem('arabium_session')||'null');return value&&value.role==='user'&&typeof value.username==='string'?value:null}catch(e){return null}}
+function saveSessionUser(){try{if(currentUser&&currentUser.role==='user')sessionStorage.setItem('arabium_session',JSON.stringify({username:currentUser.username,role:'user'}));else sessionStorage.removeItem('arabium_session')}catch(e){}}
+let state=loadState(), authMode='login', wordType='all', resourceType='all', selectedGrade='all', adminTab='dashboard', editingId=null, isAdminSession=false, currentUser=loadSessionUser(), activeExam=null, flashDeck=[], flashIndex=0, fileUrlCache=new Map(), dbPromise=null;
 function loadState(){try{const s=JSON.parse(localStorage.getItem(STORAGE)||'null');return s&&typeof s==='object'?{...emptyState(),...s,contact:{...emptyState().contact,...(s.contact||{})}}:emptyState()}catch(e){return emptyState()}}
 function saveState(){try{localStorage.setItem(STORAGE,JSON.stringify(state));return true}catch(e){toast('فضای ذخیره‌سازی مرورگر پر شده؛ یه فایل کم‌حجم‌تر انتخاب کن.');return false}}
 function uid(){return 'a'+Date.now().toString(36)+Math.random().toString(36).slice(2,8)}
@@ -370,25 +432,26 @@ async function hashPass(pass){try{const buf=await crypto.subtle.digest('SHA-256'
 $('#authForm').addEventListener('submit',async e=>{e.preventDefault();const fd=new FormData(e.currentTarget),u=String(fd.get('username')||'').trim(),email=String(fd.get('email')||'').trim().toLowerCase(),p=String(fd.get('password')||''),p2=String(fd.get('password2')||'');
  if(!u||!p){toast('همه قسمت‌های لازم رو پر کن.');return}
  if(authMode==='login'){
-  if(u.toLowerCase()===ADMIN_USER&&p===ADMIN_PASS){isAdminSession=true;currentUser={username:'مدیر',role:'admin'};$('#authOpen').textContent='پنل مدیریت';closeOverlay('authOverlay');openAdmin();toast('ورود مدیر انجام شد.');return}
+  if(u.toLowerCase()===ADMIN_USER&&p===ADMIN_PASS){isAdminSession=true;currentUser={username:'مدیر',role:'admin'};saveSessionUser();updateLearningAccess();renderPublic();closeOverlay('authOverlay');openAdmin();toast('ورود مدیر انجام شد.');return}
   const user=state.users.find(x=>x.username.toLowerCase()===u.toLowerCase());if(!user||user.passHash!==await hashPass(p)){toast('نام کاربری یا رمزت اشتباهه.');return}
-  currentUser={username:user.username,role:'user'};$('#authOpen').textContent='سلام، '+user.username;closeOverlay('authOverlay');toast('با موفقیت وارد حساب شدی.');return;
+  currentUser={username:user.username,role:'user'};saveSessionUser();updateLearningAccess();renderPublic();closeOverlay('authOverlay');toast('با موفقیت وارد حساب شدی.');return;
  }
  if(p.length<8){toast('رمزت باید حداقل ۸ کاراکتر داشته باشه.');return}if(p!==p2){toast('دو تا رمز با هم یکی نیستن.');return}
  if(authMode==='signup'){
   if(!email||!email.includes('@')){toast('یه ایمیل معتبر وارد کن.');return}if(state.users.some(x=>x.username.toLowerCase()===u.toLowerCase())){toast('این نام کاربری قبلاً استفاده شده.');return}
-  state.users.push({id:uid(),username:u,email,passHash:await hashPass(p),createdAt:new Date().toISOString()});saveState();currentUser={username:u,role:'user'};$('#authOpen').textContent='سلام، '+u;closeOverlay('authOverlay');toast('حسابت ساخته شد.');return;
+  state.users.push({id:uid(),username:u,email,passHash:await hashPass(p),createdAt:new Date().toISOString()});saveState();currentUser={username:u,role:'user'};saveSessionUser();updateLearningAccess();renderPublic();closeOverlay('authOverlay');toast('حسابت ساخته شد.');return;
  }
  const idx=state.users.findIndex(x=>x.username.toLowerCase()===u.toLowerCase()&&x.email.toLowerCase()===email);if(idx<0){toast('نام کاربری و ایمیل با اطلاعات ذخیره‌شده توی این دستگاه جور درنمیاد.');return}state.users[idx].passHash=await hashPass(p);saveState();showAuth('login');toast('رمز جدید ثبت شد؛ اکنون وارد شو.');
 });
-$('#authOpen').addEventListener('click',()=>{if(isAdminSession){openAdmin();return}if(currentUser&&currentUser.role==='user'){const ok=confirm('از حساب کاربری خارج می‌شوی؟');if(ok){currentUser=null;$('#authOpen').textContent='ورود / عضویت';toast('از حساب خارج شدی.')}return}showAuth('login');openOverlay('authOverlay')});
+$('#authOpen').addEventListener('click',()=>{if(isAdminSession){openAdmin();return}if(currentUser&&currentUser.role==='user'){const ok=confirm('از حساب کاربری خارج می‌شوی؟');if(ok){currentUser=null;saveSessionUser();updateLearningAccess();renderPublic();toast('از حساب خارج شدی.')}return}showAuth('login');openOverlay('authOverlay')});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-auth-required]');if(!b)return;showAuth(b.dataset.authRequired==='signup'?'signup':'login');openOverlay('authOverlay')});
 
 // IndexedDB for attached files, keeping the HTML itself self-contained.
 function openFileDB(){if(dbPromise)return dbPromise;dbPromise=new Promise((resolve,reject)=>{if(!('indexedDB'in window)){reject(new Error('IndexedDB unavailable'));return}const req=indexedDB.open(DB_NAME,1);req.onupgradeneeded=()=>{const db=req.result;if(!db.objectStoreNames.contains(DB_STORE))db.createObjectStore(DB_STORE)};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)});return dbPromise}
 async function saveFile(file){if(!file)return null;const db=await openFileDB();const key=uid();return new Promise((resolve,reject)=>{const tx=db.transaction(DB_STORE,'readwrite');tx.objectStore(DB_STORE).put({blob:file,name:file.name,type:file.type,size:file.size},key);tx.oncomplete=()=>resolve(key);tx.onerror=()=>reject(tx.error)})}
 async function getFile(key){if(!key)return null;const cached=fileUrlCache.get(key);if(cached)return cached;try{const db=await openFileDB();const val=await new Promise((resolve,reject)=>{const req=db.transaction(DB_STORE,'readonly').objectStore(DB_STORE).get(key);req.onsuccess=()=>resolve(req.result||null);req.onerror=()=>reject(req.error)});if(!val)return null;const url=URL.createObjectURL(val.blob);fileUrlCache.set(key,{...val,url});return {...val,url}}catch(e){return null}}
 async function deleteFile(key){if(!key)return;const cached=fileUrlCache.get(key);if(cached?.url)URL.revokeObjectURL(cached.url);fileUrlCache.delete(key);try{const db=await openFileDB();await new Promise((resolve,reject)=>{const tx=db.transaction(DB_STORE,'readwrite');tx.objectStore(DB_STORE).delete(key);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error)})}catch(e){}}
-async function fileLink(key, label='باز کردن فایل'){const f=await getFile(key);if(!f){toast('فایل در این مرورگر پیدا نشد.');return}const a=document.createElement('a');a.href=f.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent=label;document.body.append(a);a.click();a.remove()}
+async function fileLink(key, label='باز کردن فایل'){if(!requireLearningAccess('فایل آموزشی'))return;const f=await getFile(key);if(!f){toast('فایل در این مرورگر پیدا نشد.');return}const a=document.createElement('a');a.href=f.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent=label;document.body.append(a);a.click();a.remove()}
 async function hydrateImages(root=document){for(const img of $$('img[data-file-key]',root)){const f=await getFile(img.dataset.fileKey);if(f)img.src=f.url;else img.closest('.resource-cover')?.classList.add('file-missing')}}
 function gradeLabel(g){return ({'7':'هفتم','8':'هشتم','9':'نهم','all':'همه پایه‌ها'})[String(g)]||'همه پایه‌ها'}
 function gradeMatches(item){return selectedGrade==='all'||String(item.grade||'all')==='all'||String(item.grade)===selectedGrade}
@@ -398,7 +461,7 @@ $('#showAllGrades').addEventListener('click',()=>{selectedGrade='all';renderPubl
 function emptyMarkup(title,desc,icon='✧'){return `<div class="empty-state glass"><div class="empty-graphic">${icon}</div><h3>${esc(title)}</h3><p>${esc(desc)}</p></div>`}
 function renderWords(){const q=$('#wordSearch').value.trim().toLowerCase();const arr=state.words.filter(w=>gradeMatches(w)&&(wordType==='all'||w.type===wordType)&&(!q||(w.term+' '+w.translation+' '+(w.example||'')).toLowerCase().includes(q)));const grid=$('#wordGrid');grid.innerHTML=arr.length?arr.map(w=>`<article class="word-card glass"><span class="word-type">${esc(w.type)}</span><div class="word-term">${esc(w.term)}</div><div class="word-translation" id="answer_${esc(w.id)}" hidden>${esc(w.translation)}</div>${w.example?`<div class="word-note" id="example_${esc(w.id)}" hidden>${esc(w.example)}</div>`:''}<button class="word-flip" data-flip="${esc(w.id)}">↻ نمایش معنی</button></article>`).join(''):emptyMarkup(q?'نتیجه‌ای پیدا نشد':'هنوز واژه‌ای اضافه نکردیم',q?'یه عبارت دیگه رو امتحان کن.':'مدیر سایت می‌تونه فعل‌ها، اسم‌ها و صفت‌ها رو از پنل مدیریت اضافه کنه.','ع');$$('[data-flip]',grid).forEach(b=>b.addEventListener('click',()=>{const answer=document.getElementById('answer_'+b.dataset.flip);const example=document.getElementById('example_'+b.dataset.flip);if(answer){answer.hidden=!answer.hidden;if(example)example.hidden=answer.hidden;b.textContent=answer.hidden?'↻ نمایش معنی':'↩ پنهان کردن پاسخ'}}))}
 $('#wordSearch').addEventListener('input',renderWords);$('#wordTabs').addEventListener('click',e=>{const b=e.target.closest('[data-type]');if(!b)return;wordType=b.dataset.type;$$('#wordTabs .tab').forEach(x=>x.classList.toggle('active',x===b));renderWords()});function showFlashcard(){if(!flashDeck.length)return;const w=flashDeck[flashIndex%flashDeck.length];$('#flashcardType').textContent=(w.type||'واژه')+' · '+gradeLabel(w.grade);$('#flashcardTerm').textContent=w.term;$('#flashcardAnswer').textContent=w.translation+(w.example?' · '+w.example:'');$('#flashcardAnswer').hidden=true;$('#flashcardReveal').textContent='نمایش معنی';$('#flashcardStage').hidden=false}
-$('#flashcardHint').addEventListener('click',e=>{e.preventDefault();if(!state.words.length){toast('هنوز واژه‌ای برای فلش‌کارت نداریم.');return}flashDeck=state.words.slice().sort(()=>Math.random()-.5);flashIndex=0;showFlashcard();$('#flashcardStage').scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'center'})});
+$('#flashcardHint').addEventListener('click',e=>{e.preventDefault();if(!requireLearningAccess('فلش‌کارت'))return;if(!state.words.length){toast('هنوز واژه‌ای برای فلش‌کارت نداریم.');return}flashDeck=state.words.slice().sort(()=>Math.random()-.5);flashIndex=0;showFlashcard();$('#flashcardStage').scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'center'})});
 $('#flashcardReveal').addEventListener('click',()=>{const a=$('#flashcardAnswer');a.hidden=!a.hidden;$('#flashcardReveal').textContent=a.hidden?'نمایش معنی':'پنهان کردن معنی'});
 $('#flashcardNext').addEventListener('click',()=>{if(!flashDeck.length)return;flashIndex=(flashIndex+1)%flashDeck.length;showFlashcard()});
 $('#flashcardClose').addEventListener('click',()=>{$('#flashcardStage').hidden=true});
@@ -410,7 +473,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-open-file]
 function renderExams(){const g=$('#examsGrid');const exams=state.exams.filter(gradeMatches);if(!exams.length){g.innerHTML=emptyMarkup('هنوز آزمونی برای این بخش نداریم','مدیر می‌تونه آزمون چهارگزینه‌ای بسازه و نتیجه‌ها رو ببینه.','✓');return}g.innerHTML=exams.map(x=>`<article class="exam-card glass"><div class="exam-meta"><span>${esc(gradeLabel(x.grade))}</span><span>•</span><span>${(x.questions||[]).length} سؤال</span></div><h3>${esc(x.title)}</h3><p>${esc(x.description||'آزمون تمرینی عربی')}</p><button class="btn btn-primary" data-start-exam="${esc(x.id)}">شروع آزمون ←</button></article>`).join('');$$('[data-start-exam]',g).forEach(b=>b.addEventListener('click',()=>startExam(b.dataset.startExam)))}
 function renderContact(){const c=state.contact||{};$('#contactEmail').textContent=c.email||'هنوز ایمیلی ثبت نشده';$('#contactPhone').textContent=c.phone||'هنوز شماره‌ای ثبت نشده'}
 $('#contactForm').addEventListener('submit',e=>{e.preventDefault();state.messages.unshift({id:uid(),name:$('#senderName').value.trim(),email:$('#senderEmail').value.trim(),subject:$('#messageSubject').value.trim(),message:$('#messageText').value.trim(),date:new Date().toISOString()});saveState();e.currentTarget.reset();toast('پیام در همین مرورگر ثبت شد؛ ارسال اینترنتی در این نسخه فعال نیست.')});
-function startExam(id){const ex=state.exams.find(x=>x.id===id);if(!ex)return;activeExam=ex;$('#examDialogTitle').textContent=ex.title;$('#examDialogSub').textContent=gradeLabel(ex.grade)+' · '+(ex.questions||[]).length+' سؤال';$('#examResult').innerHTML='';const form=$('#examTakeForm');form.innerHTML='';if(!ex.questions||!ex.questions.length){form.innerHTML=emptyMarkup('هنوز سوالی برای این آزمون ثبت نشده','برای شروع آزمون، باید مدیر چندتا سوال اضافه کنه.');openOverlay('examOverlay');return}ex.questions.forEach((q,i)=>{const box=document.createElement('div');box.className='question-block';let html=`<h4>${i+1}. ${esc(q.question)}</h4>`;q.options.forEach((op,j)=>html+=`<label class="option-label"><input type="radio" name="q_${i}" value="${j}" required><span>${esc(op)}</span></label>`);box.innerHTML=html;form.append(box)});const sub=document.createElement('button');sub.type='submit';sub.className='btn btn-primary';sub.textContent='ثبت جواب‌ها و دیدن نتیجه';form.append(sub);form.onsubmit=e=>{e.preventDefault();const fd=new FormData(form);let correct=0;ex.questions.forEach((q,i)=>{if(Number(fd.get('q_'+i))===Number(q.answer))correct++});const score=Math.round(correct/ex.questions.length*100);$('#examResult').innerHTML=`<div class="result-banner"><div>نتیجه آزمون</div><strong>${score}٪</strong><div>${correct} پاسخ درست از ${ex.questions.length} سؤال</div></div><button class="btn btn-outline" id="closeExamResult" type="button">بستن</button>`;const res=$('#closeExamResult');if(res)res.addEventListener('click',()=>closeOverlay('examOverlay'));state.examResults.unshift({id:uid(),examId:ex.id,title:ex.title,score,correct,total:ex.questions.length,date:new Date().toISOString(),username:currentUser?.username||'مهمان'});saveState()};openOverlay('examOverlay')}
+function startExam(id){if(!requireLearningAccess('آزمون'))return;const ex=state.exams.find(x=>x.id===id);if(!ex)return;activeExam=ex;$('#examDialogTitle').textContent=ex.title;$('#examDialogSub').textContent=gradeLabel(ex.grade)+' · '+(ex.questions||[]).length+' سؤال';$('#examResult').innerHTML='';const form=$('#examTakeForm');form.innerHTML='';if(!ex.questions||!ex.questions.length){form.innerHTML=emptyMarkup('هنوز سوالی برای این آزمون ثبت نشده','برای شروع آزمون، باید مدیر چندتا سوال اضافه کنه.');openOverlay('examOverlay');return}ex.questions.forEach((q,i)=>{const box=document.createElement('div');box.className='question-block';let html=`<h4>${i+1}. ${esc(q.question)}</h4>`;q.options.forEach((op,j)=>html+=`<label class="option-label"><input type="radio" name="q_${i}" value="${j}" required><span>${esc(op)}</span></label>`);box.innerHTML=html;form.append(box)});const sub=document.createElement('button');sub.type='submit';sub.className='btn btn-primary';sub.textContent='ثبت جواب‌ها و دیدن نتیجه';form.append(sub);form.onsubmit=e=>{e.preventDefault();const fd=new FormData(form);let correct=0;ex.questions.forEach((q,i)=>{if(Number(fd.get('q_'+i))===Number(q.answer))correct++});const score=Math.round(correct/ex.questions.length*100);$('#examResult').innerHTML=`<div class="result-banner"><div>نتیجه آزمون</div><strong>${score}٪</strong><div>${correct} پاسخ درست از ${ex.questions.length} سؤال</div></div><button class="btn btn-outline" id="closeExamResult" type="button">بستن</button>`;const res=$('#closeExamResult');if(res)res.addEventListener('click',()=>closeOverlay('examOverlay'));state.examResults.unshift({id:uid(),examId:ex.id,title:ex.title,score,correct,total:ex.questions.length,date:new Date().toISOString(),username:currentUser?.username||'مهمان'});saveState()};openOverlay('examOverlay')}
 
 // Admin CRUD configuration
 const schemas={
@@ -422,7 +485,7 @@ const schemas={
 };
 const tabInfo={dashboard:['نمای کلی','خلاصه وضعیت سایت و آمار محتوا.'],words:['واژه‌نامه','واژه‌ها را اضافه، ویرایش یا حذف کن.'],grammar:['قواعد و پوشه‌ها','مدیریت درس‌نامه‌ها، پوشه‌ها، فایل‌ها و لینک‌ها.'],videos:['ویدیوهای آموزشی','لینک فیلم و تصویر کاور را مدیریت کن.'],notes:['جزوه‌ها','فایل‌های جزوه را بارگذاری و مدیریت کن.'],exams:['آزمون‌ها','آزمون و سؤال‌های چهارگزینه‌ای را بساز و منتشر کن.'],contact:['ارتباط با ما','متن معرفی و اطلاعات تماس عمومی را ویرایش کن.'],messages:['پیام‌های دریافتی','پیام‌هایی که در همین مرورگر ثبت شده‌اند.'],users:['کاربران ثبت‌شده','فهرست حساب‌های ساخته‌شده روی همین مرورگر.']};
 function openAdmin(){if(!isAdminSession){toast('ابتدا با حساب مدیر وارد شو.');return}adminTab='dashboard';editingId=null;renderAdmin();openOverlay('adminOverlay')}
-$('#adminLogout').addEventListener('click',()=>{isAdminSession=false;currentUser=null;$('#authOpen').textContent='ورود / عضویت';closeOverlay('adminOverlay');toast('از پنل مدیر خارج شدی.')});
+$('#adminLogout').addEventListener('click',()=>{isAdminSession=false;currentUser=null;saveSessionUser();updateLearningAccess();renderPublic();closeOverlay('adminOverlay');toast('از پنل مدیر خارج شدی.')});
 $('#adminNav').addEventListener('click',e=>{const b=e.target.closest('[data-admin-tab]');if(!b)return;adminTab=b.dataset.adminTab;editingId=null;renderAdmin()});
 function ensureAdmin(){if(!isAdminSession){toast('این عملیات فقط برای مدیر مجاز است.');return false}return true}
 function renderAdmin(){if(!ensureAdmin())return;$$('[data-admin-tab]').forEach(b=>b.classList.toggle('active',b.dataset.adminTab===adminTab));const main=$('#adminMain');if(adminTab==='dashboard'){main.innerHTML=`<div class="admin-title-row"><div><h3>${tabInfo.dashboard[0]}</h3><p>${tabInfo.dashboard[1]}</p></div></div><div class="admin-kpis">${[['words','واژه'],['grammar','محتوای قواعد'],['videos','ویدیو'],['notes','جزوه']].map(([k,l])=>`<div class="kpi glass"><strong>${state[k].length}</strong><span>${l}</span></div>`).join('')}</div><div class="admin-box glass"><h4>شروع سریع</h4><div class="toolbar">${[['words','＋ افزودن واژه'],['grammar','＋ افزودن بخش قواعد'],['videos','＋ افزودن ویدیو'],['notes','＋ افزودن جزوه'],['exams','＋ ساخت آزمون']].map(([k,l])=>`<button class="btn btn-outline" data-goto-tab="${k}">${l}</button>`).join('')}</div></div><div class="admin-box glass"><h4>یادآوری مهم</h4><p class="muted" style="margin:0;font-size:.85rem">اطلاعات متنی در فضای ذخیره‌سازی همین مرورگر و فایل‌ها در IndexedDB همین دستگاه ذخیره می‌شوند. این ذخیره‌سازی بین کاربران یا دستگاه‌های دیگر همگام نمی‌شود.</p></div>`;$$('[data-goto-tab]',main).forEach(b=>b.addEventListener('click',()=>{adminTab=b.dataset.gotoTab;renderAdmin()}));return}
@@ -443,7 +506,10 @@ function fieldHtml(f,current){let value=current?.[f.key]||'';let required=f.requ
 return `<div class="field ${f.type==='textarea'?'full':''}"><label for="${id}">${esc(f.label)}</label>${html}</div>`}
 function parseQuestions(str){return str.split(/\r?\n/).map(x=>x.trim()).filter(Boolean).map(line=>{const p=line.split('|').map(x=>x.trim());if(p.length<6)return null;const answerRaw=Number(p[5]);if(!p[0]||p.slice(1,5).some(x=>!x)||!Number.isInteger(answerRaw)||answerRaw<1||answerRaw>4)return null;return{question:p[0],options:p.slice(1,5),answer:answerRaw-1}}).filter(Boolean)}
 function adminRowHtml(x,key){const name=x.term||x.title||'(بدون عنوان)';let sub='';if(key==='words')sub=`${x.translation||''} · ${x.type||''} · ${gradeLabel(x.grade)}`;else if(key==='grammar')sub=`${x.folder||''} · ${gradeLabel(x.grade)}`;else if(key==='exams')sub=`${(x.questions||[]).length} سؤال · ${gradeLabel(x.grade)}`;else sub=`${gradeLabel(x.grade)}${x.fileKey?' · دارای فایل':''}`;return `<div class="admin-row"><div class="admin-row-main"><b>${esc(name)}</b><small>${esc(sub)}</small></div><div class="admin-row-actions"><button class="mini-btn" data-edit-item="${esc(x.id)}">ویرایش</button><button class="mini-btn" data-delete-item="${esc(x.id)}">حذف</button></div></div>`}
-function renderPublic(){renderWords();renderGrammar();renderResources();renderExams();renderContact();updateGradeUI()}
+function hasLearningAccess(){return !!(isAdminSession||(currentUser&&currentUser.role==='user'))}
+function updateLearningAccess(){const allowed=hasLearningAccess();['grades','learning-tools','vocabulary','grammar','resources','exams'].forEach(id=>{const section=$('#'+id);if(section)section.classList.toggle('auth-unlocked',allowed)});const button=$('#authOpen');if(button)button.textContent=isAdminSession?'پنل مدیریت':allowed?'سلام، '+currentUser.username:'ورود / عضویت'}
+function requireLearningAccess(feature='این بخش آموزشی'){if(hasLearningAccess())return true;toast('برای استفاده از محتوای آموزشی، اول وارد شو یا رایگان ثبت‌نام کن.');showAuth('login');openOverlay('authOverlay');return false}
+function renderPublic(){updateLearningAccess();renderContact();updateGradeUI();if(!hasLearningAccess()){['wordGrid','grammarGrid','resourcesGrid','examsGrid'].forEach(id=>{const el=$('#'+id);if(el)el.innerHTML=''});const stage=$('#flashcardStage');if(stage)stage.hidden=true;return}renderWords();renderGrammar();renderResources();renderExams()}
 renderPublic();showAuth('login');
 // Keep keyboard behavior friendly for dialogs and scroll targets.
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){$$('.overlay.open').forEach(o=>closeOverlay(o.id));$('#navLinks').classList.remove('open')}});
