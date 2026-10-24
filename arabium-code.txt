@@ -460,15 +460,19 @@ function friendlyAuthError(error, mode){
  const msg=String(error?.payload?.msg||error?.payload?.message||error?.payload?.error_description||error?.message||'');
  if(error?.status===429)return 'تعداد تلاش‌ها زیاد است؛ چند دقیقه دیگر دوباره امتحان کن.';
  if(mode==='login'){
-  if(/not confirmed|email not confirmed/i.test(msg))return 'ایمیل حساب هنوز تأیید نشده است. لینک تأیید ایمیل را باز کن و دوباره وارد شو.';
+  if(error?.payload?.code==='email_not_confirmed'||/not confirmed|email_not_confirmed/i.test(msg))return 'ایمیل حساب هنوز تأیید نشده است. لینک تأیید ایمیل را باز کن و دوباره وارد شو.';
   return 'نام کاربری یا رمز عبور اشتباه است.';
  }
  if(mode==='signup'){
+  if(/email address not authorized|not authorized/i.test(msg))return 'ثبت‌نام عمومی هنوز آمادهٔ ارسال ایمیل نیست؛ مدیر سایت باید SMTP اختصاصی را در تنظیمات Supabase فعال کند.';
   if(/username|duplicate|unique|already registered|already been registered/i.test(msg))return 'ثبت‌نام انجام نشد؛ نام کاربری یا ایمیل ممکن است قبلاً استفاده شده باشد.';
   if(/password/i.test(msg))return 'رمز عبور پذیرفته نشد؛ یک رمز قوی با حداقل ۸ نویسه انتخاب کن.';
   return 'ثبت‌نام انجام نشد. ایمیل را بررسی کن و دوباره تلاش کن.';
  }
- if(mode==='reset')return 'درخواست ارسال لینک بازیابی انجام نشد؛ ایمیل را بررسی کن و دوباره تلاش کن.';
+ if(mode==='reset'){
+  if(/email address not authorized|not authorized/i.test(msg))return 'ارسال ایمیل بازیابی برای عموم هنوز فعال نیست؛ باید SMTP اختصاصی در Supabase تنظیم شود.';
+  return 'درخواست ارسال لینک بازیابی انجام نشد؛ ایمیل را بررسی کن و دوباره تلاش کن.';
+ }
  if(mode==='update-password')return 'رمز جدید ذخیره نشد. لینک بازیابی ممکن است منقضی شده باشد.';
  return 'ارتباط با سامانهٔ ورود برقرار نشد. اتصال اینترنت را بررسی و دوباره تلاش کن.';
 }
