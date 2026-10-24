@@ -574,7 +574,7 @@ function speakVocabularyWord(){
   return;
  }
  window.speechSynthesis.cancel();
- const utterance=new SpeechSynthesisUtterance(String(activeVocabWord.term||'').replace(/[\u064B-\u065F\u0670]/g,''));
+ const utterance=new SpeechSynthesisUtterance(String(activeVocabWord.term||''));
  utterance.lang='ar-SA';utterance.rate=.78;utterance.pitch=1;
  const voices=window.speechSynthesis.getVoices();
  const arabicVoice=voices.find(voice=>/^ar([_-]|$)/i.test(voice.lang));
