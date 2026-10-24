@@ -671,7 +671,7 @@ const grade7VocabularyPacks=[
  'grade7-vocab-plurals.json.gz.b64'
 ];
 async function fetchCompressedJson(path){
- const response=await fetch('./'+path+'?v=20261023c',{cache:'no-store'});
+ const response=await fetch('./'+path+'?v=20261024d',{cache:'no-store'});
  if(!response.ok)throw new Error('خطا در دریافت '+path+': '+response.status);
  const encoded=(await response.text()).trim();
  if(typeof DecompressionStream!=='function')throw new Error('این مرورگر از بازکردن دادهٔ فشرده پشتیبانی نمی‌کند.');
