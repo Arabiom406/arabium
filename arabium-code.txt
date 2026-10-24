@@ -601,8 +601,8 @@ function renderWords(){
   const badge=wordType!=='all'?wordType:(w.type||'واژه');
   return `<article class="word-card glass"><span class="word-type">${esc(badge)}</span><button class="word-term word-term-button" type="button" data-vocab-view="${esc(w.id)}" aria-label="نمایش تصویر و شنیدن تلفظ ${esc(w.term)}" title="برای تصویر و تلفظ ضربه بزن">${esc(w.term)}</button><div class="word-translation" id="answer_${esc(w.id)}" hidden>${wordDetailsMarkup(w)}</div><button class="word-flip" type="button" data-flip="${esc(w.id)}">↻ نمایش معنی و اطلاعات</button></article>`
  }).join(''):emptyMarkup(q?'نتیجه‌ای پیدا نشد':'هنوز واژه‌ای برای این دسته اضافه نشده',q?'یه عبارت دیگه رو امتحان کن.':'واژه‌های پایه هفتم از فهرست اصلی عربیوم بارگذاری می‌شن.','ع');
- $$('.data-vocab-view',grid).forEach(()=>{});
- $$('.data-flip',grid).forEach(b=>b.addEventListener('click',()=>{
+ $$('[data-vocab-view]',grid).forEach(b=>b.addEventListener('click',()=>openVocabularyVisual(b.dataset.vocabView)));
+ $$('[data-flip]',grid).forEach(b=>b.addEventListener('click',()=>{
   const answer=document.getElementById('answer_'+b.dataset.flip);
   if(answer){answer.hidden=!answer.hidden;b.textContent=answer.hidden?'↻ نمایش معنی و اطلاعات':'↩ بستن اطلاعات'}
  }));
