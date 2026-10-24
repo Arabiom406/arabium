@@ -488,11 +488,19 @@ async function establishAuthSession(session){
 }
 async function restoreAuthSession(){
  const hash=new URLSearchParams(location.hash.replace(/^#/,''));
- if(hash.get('type')==='recovery'&&hash.get('access_token')&&hash.get('refresh_token')){
+ if(hash.get('access_token')&&hash.get('refresh_token')){
+  const authType=hash.get('type')||'signup';
   const session={access_token:hash.get('access_token'),refresh_token:hash.get('refresh_token'),expires_in:Number(hash.get('expires_in')||3600),token_type:hash.get('token_type')||'bearer'};
   history.replaceState(null,'',location.pathname+location.search);
-  try{await establishAuthSession(session);showAuth('update-password');openOverlay('authOverlay');toast('لینک بازیابی تأیید شد؛ رمز جدید را وارد کن.');}
-  catch(e){authSession=null;currentUser=null;saveSessionUser();showAuth('reset');openOverlay('authOverlay');showAuthError('لینک بازیابی معتبر نیست یا منقضی شده است. دوباره درخواست بازیابی بده.');}
+  try{
+   await establishAuthSession(session);
+   if(authType==='recovery'){showAuth('update-password');openOverlay('authOverlay');toast('لینک بازیابی تأیید شد؛ رمز جدید را وارد کن.');}
+   else{closeOverlay('authOverlay');updateLearningAccess();renderPublic();toast(authType==='signup'?'ایمیل تأیید شد و حساب فعال شد.':'ورود انجام شد.');}
+  }catch(e){
+   authSession=null;currentUser=null;saveSessionUser();
+   if(authType==='recovery'){showAuth('reset');openOverlay('authOverlay');showAuthError('لینک بازیابی معتبر نیست یا منقضی شده است. دوباره درخواست بازیابی بده.');}
+   else{toast('تأیید حساب کامل نشد؛ با نام کاربری و رمز عبور وارد شو.','error');}
+  }
   return;
  }
  if(!authSession||!authSession.refresh_token)return;
