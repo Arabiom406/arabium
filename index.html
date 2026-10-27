@@ -834,6 +834,8 @@ loadGrade7Seed().then(count=>{
  console.error('بارگذاری واژگان پایه هفتم انجام نشد:',error);
  toast('بارگذاری واژه‌ها کامل نشد؛ صفحه را دوباره تازه‌سازی کن.');
 });
+// Restore the Supabase session and handle password-recovery links on page load.
+restoreAuthSession().catch(error=>console.warn('بازیابی نشست عربیوم انجام نشد:',error));
 // Keep keyboard behavior friendly for dialogs and scroll targets.
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){$$('.overlay.open').forEach(o=>closeOverlay(o.id));$('#navLinks').classList.remove('open')}});
 // The previous demo administrator credentials were removed; never embed privileged credentials in public browser code.
