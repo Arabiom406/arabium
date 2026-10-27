@@ -522,7 +522,7 @@ function showAuth(mode){
  const specs=mode==='signup'?[['username','نام کاربری (۳ تا ۳۲ نویسه)','text'],['email','ایمیل','email'],['password','رمز عبور (حداقل ۸ نویسه)','password'],['password2','تکرار رمز عبور','password']]:mode==='reset'?[['email','ایمیل ثبت‌نام','email']]:mode==='update-password'?[['password','رمز عبور جدید (حداقل ۸ نویسه)','password'],['password2','تکرار رمز جدید','password']]:[['username','نام کاربری','text'],['password','رمز عبور','password']];
  specs.forEach(([name,label,type])=>{const wrap=document.createElement('div');wrap.className='field';const l=document.createElement('label');l.textContent=label;l.htmlFor='auth_'+name;const i=document.createElement('input');i.className='input';i.id='auth_'+name;i.name=name;i.type=type;i.required=true;i.autocomplete=type==='password'?(mode==='login'?'current-password':'new-password'):(name==='email'?'email':'username');if((name==='password'||name==='password2')&&(mode==='signup'||mode==='update-password'))i.minLength=8;if(name==='email')i.maxLength=120;wrap.append(l,i);form.append(wrap)});
  const submit=document.createElement('button');submit.className='btn btn-primary';submit.type='submit';submit.textContent=mode==='signup'?'ساخت حساب کاربری':mode==='reset'?'ارسال لینک بازیابی':mode==='update-password'?'ذخیره رمز جدید':'ورود به عربیوم';form.append(submit);
- const tip=document.createElement('p');tip.className='form-note';tip.textContent=mode==='signup'?'حساب با ایمیل و رمز عبور ساخته می‌شود. برای فعال‌سازی، لینک تأیید ارسال‌شده به ایمیل را باز کن.':mode==='reset'?'لینک امن بازیابی رمز به ایمیل ثبت‌شده ارسال می‌شود.':mode==='update-password'?'رمز جدید حداقل ۸ نویسه داشته باشد.':'با نام کاربری و رمز عبور حساب عربیوم وارد شو.';form.append(tip);
+ const tip=document.createElement('p');tip.className='form-note';tip.textContent=mode==='signup'?'حساب با ایمیل و رمز عبور ساخته می‌شود و می‌توانی با همان نام کاربری از گوشی‌ها و سیستم‌های دیگر هم وارد شوی.':mode==='reset'?'لینک امن بازیابی رمز به ایمیل ثبت‌شده ارسال می‌شود.':mode==='update-password'?'رمز جدید حداقل ۸ نویسه داشته باشد.':'با نام کاربری و رمز عبور حساب ابری عربیوم وارد شو. حساب‌هایی که پیش‌تر فقط در همین مرورگر ساخته شده‌اند باید یک بار از بخش عضویت دوباره ساخته شوند تا بین دستگاه‌ها کار کنند.';form.append(tip);
 }
 $('#authForm').addEventListener('input',clearAuthError);
 $('#authForm').addEventListener('submit',async e=>{
@@ -787,7 +787,7 @@ const grade7VocabularyPacks=[
  'grade7-vocab-plurals.json.gz.b64'
 ];
 async function fetchCompressedJson(path){
- const response=await fetch('./'+path+'?v=20261024e',{cache:'no-store'});
+ const response=await fetch('./'+path+'?v=20261026f',{cache:'no-store'});
  if(!response.ok)throw new Error('خطا در دریافت '+path+': '+response.status);
  const encoded=(await response.text()).trim();
  if(typeof DecompressionStream!=='function')throw new Error('این مرورگر از بازکردن دادهٔ فشرده پشتیبانی نمی‌کند.');
