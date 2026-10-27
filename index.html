@@ -556,7 +556,7 @@ $('#authForm').addEventListener('submit',async e=>{
   if(p.length<8){showAuthError('رمز عبور باید حداقل ۸ کاراکتر داشته باشد.');return}
   if(p!==p2){showAuthError('رمزهای واردشده با هم مطابقت ندارند.');return}
   try{
-   const signupResponse=await fetch(SUPABASE_LOGIN_URL,{method:'POST',headers:{'Content-Type':'application/json','apikey':SUPABASE_PUBLISHABLE_KEY},body:JSON.stringify({action:'signup',username:u,email,password:p}),cache:'no-store'});const result=await signupResponse.json().catch(()=>({}));if(!signupResponse.ok||!result.access_token||!result.refresh_token){const error=new Error(result?.error||'ثبت‌نام کامل نشد.');error.status=signupResponse.status;error.payload=result;throw error}
+   const signupResponse=await fetch(SUPABASE_LOGIN_URL,{method:'POST',headers:{'Content-Type':'application/json','apikey':SUPABASE_PUBLISHABLE_KEY},body:JSON.stringify({action:'signup',username:u,email,password:p}),cache:'no-store'});const result=await signupResponse.json().catch(()=>({}));if(signupResponse.status===201&&result?.error){closeOverlay('authOverlay');showAuth('login');toast(result.error);return}if(!signupResponse.ok||!result.access_token||!result.refresh_token){const error=new Error(result?.error||'ثبت‌نام کامل نشد.');error.status=signupResponse.status;error.payload=result;throw error}
    if(result.access_token&&result.refresh_token){
     await establishAuthSession(result);closeOverlay('authOverlay');updateLearningAccess();renderPublic();toast('حساب کاربری ساخته شد و وارد عربیوم شدی.');
    }else{
